@@ -1,422 +1,287 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="RovingReads — a modern book club experience." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <title>RovingReads</title>
-  <style>
-    :root{
-      /* Palette: bookish + hunter green */
-      --bg: #07140f;                 /* deep green-black */
-      --card: rgba(255, 251, 242, .06); /* subtle paper tint on dark */
-      --paper: #fff7ea;              /* warm paper */
-      --text: #f2f6f3;               /* soft off-white */
-      --muted: rgba(242,246,243,.72);
-    
-      --accent: #1e5b3f;             /* hunter green */
-      --accent2: #caa45a;            /* antique gold */
-      --border: rgba(255,255,255,.12);
-    
-      --shadow: 0 14px 36px rgba(0,0,0,.40);
-      --radius: 18px;
-    
-      --max: 1050px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      --serif: "Literata", ui-serif, Georgia, "Times New Roman", serif;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:var(--sans);
-      color:var(--text);
-      background:
-        radial-gradient(900px 600px at 15% 0%, rgba(30,91,63,.35), transparent 60%),
-        radial-gradient(700px 500px at 90% 15%, rgba(202,164,90,.18), transparent 55%),
-        linear-gradient(180deg, rgba(255,247,234,.06), transparent 22%),
-        var(--bg);
-      line-height:1.5;
-    }
-    h1, h2, h3 { font-family: var(--serif); letter-spacing: .2px; }
-    h1{ font-weight:700; }
-    a{color:inherit}
-    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 70px}
-    header{
-      position:sticky; top:0; backdrop-filter: blur(10px);
-      background: rgba(11,16,32,.65);
-      border-bottom:1px solid var(--border);
-      z-index:20;
-    }
-    .nav{
-      max-width:var(--max); margin:0 auto; padding:14px 18px;
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
-    }
-    .brand{display:flex; align-items:center; gap:10px; text-decoration:none}
-    .bookmark{
-      width: 10px;
-      border-radius: 10px;
-      background: linear-gradient(180deg, var(--accent2), rgba(202,164,90,.35));
-      border: 1px solid rgba(255,247,234,.18);
-    }
-    .logo{
-      width:34px; height:34px; border-radius:10px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: var(--shadow);
-    }
-    .brand span{font-weight:700; letter-spacing:.2px}
-    .links{display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end}
-    .links a{
-      text-decoration:none; color:var(--muted); font-size:14px; padding:8px 10px;
-      border-radius:12px;
-    }
-    .links a:hover{background:rgba(255,255,255,.06); color:var(--text)}
-    .hero{
-      display:grid; grid-template-columns: 1.25fr .75fr; gap:22px;
-      padding:42px 0 18px;
-    }
-    @media (max-width: 900px){ .hero{grid-template-columns:1fr} }
-    .kicker{
-      font-family:var(--mono);
-      color:var(--muted);
-      font-size:13px;
-      letter-spacing:.3px;
-      text-transform:uppercase;
-    }
-    h1{
-      margin:10px 0 10px; font-size:44px; line-height:1.06;
-    }
-    @media (max-width: 520px){ h1{font-size:36px} }
-    .sub{color:var(--muted); font-size:17px; margin:0 0 18px}
-    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
-    .btn{
-      appearance:none; 
-      border:1px solid rgba(255,247,234,.18);
-      background: rgba(255,247,234,.06);
-      color: var(--text);
-      padding:11px 14px;
-      border-radius:14px;
-      text-decoration:none;
-      font-weight:600;
-      font-size:14px;
-      display:inline-flex; align-items:center; gap:10px;
-    }
-    .btn.primary{
-      border-color: rgba(255,247,234,.25);
-      background: linear-gradient(135deg, var(--accent), #164431);
-      color: var(--text);
-    }
-    .btn.primary:hover{
-      filter: brightness(1.06);
-    }
-    .btn:hover{transform: translateY(-1px)}
-    .meta{
-      display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px;
-    }
-    .pill{
-      border:1px solid var(--border);
-      border-radius: 999px;
-      padding:8px 10px;
-      color: var(--muted);
-      font-size:13px;
-      display:flex; justify-content:space-between; gap:10px;
-      background: rgba(0,0,0,.12);
-    }
-    .pill b{color:var(--text)}
-    section{padding:28px 0}
-    .grid3{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px}
-    @media (max-width: 900px){ .grid3{grid-template-columns:1fr} }
-    .hcard, .card{
-      background: linear-gradient(180deg, rgba(255,247,234,.08), rgba(255,247,234,.04));
-      border:1px solid rgba(255,247,234,.14);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .card h3{margin:0 0 8px; font-size:16px}
-    .card p{margin:0; color:var(--muted); font-size:14px}
-    .sectionTitle{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
-      margin:0 0 14px;
-    }
-    .sectionTitle h2{margin:0; font-size:20px}
-    .sectionTitle small{color:var(--muted)}
-    .split{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
-    @media (max-width: 900px){ .split{grid-template-columns:1fr} }
-    .teamList{display:grid; grid-template-columns: repeat(2, 1fr); gap:10px}
-    @media (max-width: 520px){ .teamList{grid-template-columns:1fr} }
-    .person{
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:12px;
-      background: rgba(0,0,0,.10);
-      display:flex; gap:12px; align-items:flex-start;
-    }
-    .avatar{
-      width:38px; height:38px; border-radius:14px;
-      background: rgba(255,255,255,.10);
-      border:1px solid var(--border);
-      flex: 0 0 auto;
-    }
-    .person b{display:block}
-    .person span{color:var(--muted); font-size:13px}
-    form{
-      display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;
-    }
-    input{
-      flex:1 1 240px;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      outline:none;
-    }
-    input::placeholder{color:rgba(233,240,255,.55)}
-    .note{color:var(--muted); font-size:12px; margin-top:10px}
-    footer{
-      margin-top:40px;
-      padding-top:18px;
-      border-top:1px solid var(--border);
-      color:var(--muted);
-      font-size:13px;
-      display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between;
-    }
-    .mono{font-family:var(--mono)}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="RovingReads — a modern book club experience." />
+<title>RovingReads</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#07140f;
+  --paper:#fff7ea;
+  --text:#f4f7f5;
+  --muted:rgba(244,247,245,.75);
+
+  --hunter:#1e5b3f;
+  --hunter-dark:#164431;
+  --gold:#caa45a;
+
+  --border:rgba(255,247,234,.18);
+  --shadow:0 18px 40px rgba(0,0,0,.45);
+
+  --radius:20px;
+  --max:1050px;
+
+  --sans:"Inter", system-ui, sans-serif;
+  --serif:"Literata", Georgia, serif;
+}
+
+/* Reset */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:var(--sans);
+  background:
+    radial-gradient(900px 600px at 10% 0%, rgba(30,91,63,.4), transparent 60%),
+    radial-gradient(700px 500px at 90% 10%, rgba(202,164,90,.18), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+/* Layout wrapper */
+.wrap{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* Header */
+header{
+  padding:20px 0;
+}
+.nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:600;
+  text-decoration:none;
+  color:var(--text);
+}
+.logo{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--hunter),var(--gold));
+}
+.links{
+  display:flex;
+  gap:18px;
+}
+.links a{
+  text-decoration:none;
+  color:var(--muted);
+  font-size:14px;
+}
+.links a:hover{color:var(--text)}
+
+/* Hero */
+.hero{
+  padding:80px 0 60px;
+  display:grid;
+  gap:40px;
+}
+.hero h1{
+  font-family:var(--serif);
+  font-size:48px;
+  line-height:1.15;
+  margin:0 0 20px;
+}
+.hero p{
+  max-width:600px;
+  color:var(--muted);
+  font-size:18px;
+}
+
+/* Buttons */
+.btn{
+  display:inline-block;
+  padding:14px 22px;
+  border-radius:14px;
+  font-weight:600;
+  text-decoration:none;
+  font-size:14px;
+  border:1px solid var(--border);
+  background:rgba(255,247,234,.08);
+  color:var(--text);
+}
+.btn.primary{
+  background:linear-gradient(135deg,var(--hunter),var(--hunter-dark));
+  border:none;
+}
+.btn.primary:hover{filter:brightness(1.05)}
+.btn:hover{transform:translateY(-1px)}
+
+.cta{
+  margin-top:30px;
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+/* Sections */
+section{
+  padding:80px 0;
+}
+.section-title{
+  font-family:var(--serif);
+  font-size:32px;
+  margin-bottom:40px;
+}
+
+/* Cards */
+.grid{
+  display:grid;
+  gap:24px;
+}
+.grid.three{
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+}
+.card{
+  padding:30px;
+  border-radius:var(--radius);
+  background:linear-gradient(180deg,rgba(255,247,234,.10),rgba(255,247,234,.05));
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+.card h3{
+  font-family:var(--serif);
+  margin:0 0 12px;
+}
+.card p{
+  margin:0;
+  color:var(--muted);
+}
+
+/* Signup */
+.signup-box{
+  max-width:520px;
+}
+input{
+  width:100%;
+  padding:14px 16px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:rgba(255,247,234,.08);
+  color:var(--text);
+  margin-bottom:14px;
+}
+input::placeholder{color:rgba(244,247,245,.5)}
+
+/* Footer */
+footer{
+  padding:40px 0;
+  border-top:1px solid var(--border);
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .hero h1{font-size:38px}
+}
+</style>
 </head>
 
 <body>
-<header>
+
+<header class="wrap">
   <div class="nav">
-    <a class="brand" href="#top">
-      <div class="logo" aria-hidden="true"></div>
-      <span>RovingReads</span>
+    <a href="#" class="brand">
+      <div class="logo"></div>
+      RovingReads
     </a>
-    <nav class="links">
+    <div class="links">
       <a href="#about">About</a>
       <a href="#features">Features</a>
-      <a href="#team">Team</a>
-      <a href="#signup">Sign up</a>
-    </nav>
+      <a href="#signup">Sign Up</a>
+    </div>
   </div>
 </header>
 
-<main id="top" class="wrap">
-  <section class="hero">
-    <div class="hcard">
-      <div style="display:flex; gap:12px; align-items:center;">
-        <div class="bookmark" aria-hidden="true"></div>
-        <div class="kicker">Book clubs, made easier</div>
-      </div>
-      <h1>RovingReads helps your club pick books, stay on track, and talk about them.</h1>
-      <p class="sub">
-        A simple place for your reading group to discover titles, organize reads, and share ratings & reactions—
-        without the chaos of scattered texts and spreadsheets.
-      </p>
+<main class="wrap">
 
-      <div class="ctaRow">
-        <a class="btn primary" href="#signup">Join the early access list →</a>
-        <a class="btn" href="#features">See features</a>
-      </div>
-
-      <div class="meta">
-        <div class="pill"><span>Status</span><b>Building now</b></div>
-        <div class="pill"><span>Platforms</span><b>Mobile + Web</b></div>
-        <div class="pill"><span>Focus</span><b>Book clubs</b></div>
-        <div class="pill"><span>Contact</span><b class="mono">hello@rovingreads.com</b></div>
-      </div>
+<section class="hero">
+  <div>
+    <h1>A better way to run your book club.</h1>
+    <p>
+      RovingReads helps your club discover books, track progress, share ratings,
+      and have richer discussions — all in one calm, bookish space.
+    </p>
+    <div class="cta">
+      <a href="#signup" class="btn primary">Join Early Access</a>
+      <a href="#features" class="btn">See Features</a>
     </div>
+  </div>
+</section>
 
-    <div class="hcard">
-      <div class="kicker">What you’ll get</div>
-      <div style="margin-top:12px; display:grid; gap:10px;">
-        <div class="card">
-          <h3>Smarter picks</h3>
-          <p>Suggest books based on the club’s tastes and past ratings.</p>
-        </div>
-        <div class="card">
-          <h3>Less organizing</h3>
-          <p>Track schedules, pages, meetings, and discussion prompts in one place.</p>
-        </div>
-        <div class="card">
-          <h3>Better conversations</h3>
-          <p>Capture reactions, quotes, and takeaways as you read.</p>
-        </div>
-      </div>
+<section id="about">
+  <div class="section-title">About RovingReads</div>
+  <div class="grid three">
+    <div class="card">
+      <h3>The Problem</h3>
+      <p>Book clubs live across texts, spreadsheets, and scattered notes. It’s hard to stay organized.</p>
     </div>
-  </section>
-
-  <section id="about">
-    <div class="sectionTitle">
-      <h2>About RovingReads</h2>
-      <small>Built for real book clubs (not “one-off” groups)</small>
+    <div class="card">
+      <h3>Our Approach</h3>
+      <p>We combine discovery, scheduling, and shared ratings into one clean experience.</p>
     </div>
-    <div class="split">
-      <div class="card">
-        <h3>The problem</h3>
-        <p>
-          Book clubs usually live across group chats, notes apps, spreadsheets, and a dozen links. It’s hard to remember
-          what you read, what you rated, what’s next, and what everyone wants to read.
-        </p>
-      </div>
-      <div class="card">
-        <h3>Our approach</h3>
-        <p>
-          RovingReads brings discovery, scheduling, and club ratings together. Keep it lightweight, fast, and friendly—
-          with just enough structure to keep the club moving.
-        </p>
-      </div>
+    <div class="card">
+      <h3>The Goal</h3>
+      <p>Make logistics disappear so reading — and conversation — takes center stage.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="features">
-    <div class="sectionTitle">
-      <h2>Features</h2>
-      <small>Simple now, extensible later</small>
+<section id="features">
+  <div class="section-title">Features</div>
+  <div class="grid three">
+    <div class="card">
+      <h3>Club Bookshelf</h3>
+      <p>Track what you've read, are reading, and want to read next.</p>
     </div>
-    <div class="grid3">
-      <div class="card">
-        <h3>Club bookshelf</h3>
-        <p>Shared shelf of “read / reading / next / someday” titles.</p>
-      </div>
-      <div class="card">
-        <h3>Ratings that matter</h3>
-        <p>See your rating, and a club average that reflects all members.</p>
-      </div>
-      <div class="card">
-        <h3>Reading plan</h3>
-        <p>Set a pace, meeting dates, and reminders without extra tools.</p>
-      </div>
-      <div class="card">
-        <h3>Discussion prompts</h3>
-        <p>Save questions, themes, and moments worth revisiting.</p>
-      </div>
-      <div class="card">
-        <h3>Member profiles</h3>
-        <p>Track preferences, favorite genres, and reading history.</p>
-      </div>
-      <div class="card">
-        <h3>Recommendations</h3>
-        <p>Suggestions powered by your club’s tastes (not generic lists).</p>
-      </div>
+    <div class="card">
+      <h3>Shared Ratings</h3>
+      <p>See club averages and individual member ratings.</p>
     </div>
-  </section>
-
-  <section id="team">
-    <div class="sectionTitle">
-      <h2>About the team</h2>
-      <small>Replace placeholders with real names + roles</small>
+    <div class="card">
+      <h3>Reading Plans</h3>
+      <p>Set pacing, meeting dates, and discussion prompts.</p>
     </div>
+  </div>
+</section>
 
-    <div class="split">
-      <div class="card">
-        <h3>We’re building RovingReads</h3>
-        <p>
-          We’re a small team combining product design, engineering, and a love of reading groups.
-          Our goal: make book club logistics disappear so the reading (and talking) can shine.
-        </p>
-        <p style="margin-top:10px; color:var(--muted); font-size:14px;">
-          Want to collaborate, test features, or share feedback? Email us at
-          <span class="mono">hello@rovingreads.com</span>.
-        </p>
-      </div>
+<section id="signup">
+  <div class="section-title">Join Early Access</div>
+  <div class="signup-box">
+    <p style="color:var(--muted);margin-bottom:20px;">
+      Be the first to try RovingReads when beta opens.
+    </p>
+    <input type="email" placeholder="you@example.com" />
+    <a href="#" class="btn primary">Request Access</a>
+  </div>
+</section>
 
-      <div class="card">
-        <h3>Team</h3>
-        <div class="teamList" style="margin-top:12px;">
-          <div class="person">
-            <div class="avatar" aria-hidden="true"></div>
-            <div>
-              <b>Christian Durazo</b>
-              <span>Founder • Product & Engineering</span>
-            </div>
-          </div>
-          <!-- 
-          <div class="person">
-            <div class="avatar" aria-hidden="true"></div>
-            <div>
-              <b>Teammate Name</b>
-              <span>Design • Brand & UX</span>
-            </div>
-          </div>
-          <div class="person">
-            <div class="avatar" aria-hidden="true"></div>
-            <div>
-              <b>Teammate Name</b>
-              <span>Engineering • Mobile & Backend</span>
-            </div>
-          </div>
-          <div class="person">
-            <div class="avatar" aria-hidden="true"></div>
-            <div>
-              <b>Teammate Name</b>
-              <span>Community • Beta & Partnerships</span>
-            </div>
-          </div>
-          -->
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="signup">
-    <div class="sectionTitle">
-      <h2>Sign up</h2>
-      <small>Early access / beta list</small>
-    </div>
-
-    <div class="split">
-      <div class="card">
-        <h3>Join the list</h3>
-        <p>We’ll email you when beta spots open. No spam, ever.</p>
-
-        <!-- Replace action="" with your Formspree / ConvertKit / Mailchimp endpoint -->
-        <form action="" method="POST" onsubmit="return handleSignup(event)">
-          <input required type="email" name="email" placeholder="you@example.com" />
-          <button class="btn primary" type="submit">Request access</button>
-        </form>
-
-        <div id="signupMsg" class="note" role="status" aria-live="polite"></div>
-        <div class="note">
-          Tip: easiest is Formspree (email-to-form) or a Google Form. You can also just link to a signup page.
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Other ways</h3>
-        <p style="margin-bottom:10px;">If you prefer links instead of email capture:</p>
-        <div class="ctaRow">
-          <a class="btn" href="#" aria-disabled="true">TestFlight (iOS) — coming soon</a>
-          <a class="btn" href="#" aria-disabled="true">Play Store beta — coming soon</a>
-          <a class="btn" href="#" aria-disabled="true">Web waitlist — coming soon</a>
-        </div>
-        <p class="note">
-          Replace those links when ready. If your app already has a login/signup URL, point “Web waitlist” to it.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div>© <span id="year"></span> RovingReads</div>
-    <div class="mono">Built with plain HTML • Deploy anywhere</div>
-  </footer>
 </main>
 
-<script>
-  // Tiny enhancements (no frameworks)
-  document.getElementById("year").textContent = new Date().getFullYear();
+<footer>
+  © <span id="year"></span> RovingReads
+</footer>
 
-  function handleSignup(e) {
-    // If you set a real form action endpoint, remove this function.
-    e.preventDefault();
-    const msg = document.getElementById("signupMsg");
-    msg.textContent = "Thanks! (Demo only) — connect a form endpoint to collect emails.";
-    return false;
-  }
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
 </script>
+
 </body>
 </html>
