@@ -4,25 +4,45 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="RovingReads — a modern book club experience." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <title>RovingReads</title>
   <style>
     :root{
-      --bg:#0b1020; --card:#111a33; --text:#eaf0ff; --muted:#a9b7e3;
-      --accent:#6ea8ff; --accent2:#8cffd2; --border:rgba(255,255,255,.10);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius:18px;
+      /* Palette: bookish + hunter green */
+      --bg: #07140f;                 /* deep green-black */
+      --card: rgba(255, 251, 242, .06); /* subtle paper tint on dark */
+      --paper: #fff7ea;              /* warm paper */
+      --text: #f2f6f3;               /* soft off-white */
+      --muted: rgba(242,246,243,.72);
+    
+      --accent: #1e5b3f;             /* hunter green */
+      --accent2: #caa45a;            /* antique gold */
+      --border: rgba(255,255,255,.12);
+    
+      --shadow: 0 14px 36px rgba(0,0,0,.40);
+      --radius: 18px;
+    
       --max: 1050px;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --sans: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --serif: "Literata", ui-serif, Georgia, "Times New Roman", serif;
     }
     *{box-sizing:border-box}
     body{
-      margin:0; font-family:var(--sans); color:var(--text);
-      background: radial-gradient(1200px 700px at 20% 0%, rgba(110,168,255,.25), transparent 55%),
-                  radial-gradient(1000px 600px at 90% 10%, rgba(140,255,210,.18), transparent 50%),
-                  var(--bg);
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 0%, rgba(30,91,63,.35), transparent 60%),
+        radial-gradient(700px 500px at 90% 15%, rgba(202,164,90,.18), transparent 55%),
+        linear-gradient(180deg, rgba(255,247,234,.06), transparent 22%),
+        var(--bg);
       line-height:1.5;
     }
+    h1, h2, h3 { font-family: var(--serif); letter-spacing: .2px; }
+    h1{ font-weight:700; }
     a{color:inherit}
     .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 70px}
     header{
@@ -36,6 +56,12 @@
       display:flex; align-items:center; justify-content:space-between; gap:14px;
     }
     .brand{display:flex; align-items:center; gap:10px; text-decoration:none}
+    .bookmark{
+      width: 10px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, var(--accent2), rgba(202,164,90,.35));
+      border: 1px solid rgba(255,247,234,.18);
+    }
     .logo{
       width:34px; height:34px; border-radius:10px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -53,13 +79,6 @@
       padding:42px 0 18px;
     }
     @media (max-width: 900px){ .hero{grid-template-columns:1fr} }
-    .hcard{
-      background: rgba(17,26,51,.6);
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      padding:26px;
-      box-shadow: var(--shadow);
-    }
     .kicker{
       font-family:var(--mono);
       color:var(--muted);
@@ -74,8 +93,9 @@
     .sub{color:var(--muted); font-size:17px; margin:0 0 18px}
     .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
     .btn{
-      appearance:none; border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
+      appearance:none; 
+      border:1px solid rgba(255,247,234,.18);
+      background: rgba(255,247,234,.06);
       color: var(--text);
       padding:11px 14px;
       border-radius:14px;
@@ -85,9 +105,12 @@
       display:inline-flex; align-items:center; gap:10px;
     }
     .btn.primary{
-      border-color: transparent;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#07101a;
+      border-color: rgba(255,247,234,.25);
+      background: linear-gradient(135deg, var(--accent), #164431);
+      color: var(--text);
+    }
+    .btn.primary:hover{
+      filter: brightness(1.06);
     }
     .btn:hover{transform: translateY(-1px)}
     .meta{
@@ -106,11 +129,10 @@
     section{padding:28px 0}
     .grid3{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px}
     @media (max-width: 900px){ .grid3{grid-template-columns:1fr} }
-    .card{
-      background: rgba(17,26,51,.55);
-      border:1px solid var(--border);
+    .hcard, .card{
+      background: linear-gradient(180deg, rgba(255,247,234,.08), rgba(255,247,234,.04));
+      border:1px solid rgba(255,247,234,.14);
       border-radius: var(--radius);
-      padding:18px;
       box-shadow: var(--shadow);
     }
     .card h3{margin:0 0 8px; font-size:16px}
@@ -185,7 +207,10 @@
 <main id="top" class="wrap">
   <section class="hero">
     <div class="hcard">
-      <div class="kicker">Book clubs, made easier</div>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <div class="bookmark" aria-hidden="true"></div>
+        <div class="kicker">Book clubs, made easier</div>
+      </div>
       <h1>RovingReads helps your club pick books, stay on track, and talk about them.</h1>
       <p class="sub">
         A simple place for your reading group to discover titles, organize reads, and share ratings & reactions—
