@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="RovingReads — a modern book club experience." />
+  <title>RovingReads</title>
+  <style>
+    :root{
+      --bg:#0b1020; --card:#111a33; --text:#eaf0ff; --muted:#a9b7e3;
+      --accent:#6ea8ff; --accent2:#8cffd2; --border:rgba(255,255,255,.10);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+      --max: 1050px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--sans); color:var(--text);
+      background: radial-gradient(1200px 700px at 20% 0%, rgba(110,168,255,.25), transparent 55%),
+                  radial-gradient(1000px 600px at 90% 10%, rgba(140,255,210,.18), transparent 50%),
+                  var(--bg);
+      line-height:1.5;
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 70px}
+    header{
+      position:sticky; top:0; backdrop-filter: blur(10px);
+      background: rgba(11,16,32,.65);
+      border-bottom:1px solid var(--border);
+      z-index:20;
+    }
+    .nav{
+      max-width:var(--max); margin:0 auto; padding:14px 18px;
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; text-decoration:none}
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: var(--shadow);
+    }
+    .brand span{font-weight:700; letter-spacing:.2px}
+    .links{display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end}
+    .links a{
+      text-decoration:none; color:var(--muted); font-size:14px; padding:8px 10px;
+      border-radius:12px;
+    }
+    .links a:hover{background:rgba(255,255,255,.06); color:var(--text)}
+    .hero{
+      display:grid; grid-template-columns: 1.25fr .75fr; gap:22px;
+      padding:42px 0 18px;
+    }
+    @media (max-width: 900px){ .hero{grid-template-columns:1fr} }
+    .hcard{
+      background: rgba(17,26,51,.6);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:26px;
+      box-shadow: var(--shadow);
+    }
+    .kicker{
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:13px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+    }
+    h1{
+      margin:10px 0 10px; font-size:44px; line-height:1.06;
+    }
+    @media (max-width: 520px){ h1{font-size:36px} }
+    .sub{color:var(--muted); font-size:17px; margin:0 0 18px}
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .btn{
+      appearance:none; border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding:11px 14px;
+      border-radius:14px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+      display:inline-flex; align-items:center; gap:10px;
+    }
+    .btn.primary{
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#07101a;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .meta{
+      display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px;
+    }
+    .pill{
+      border:1px solid var(--border);
+      border-radius: 999px;
+      padding:8px 10px;
+      color: var(--muted);
+      font-size:13px;
+      display:flex; justify-content:space-between; gap:10px;
+      background: rgba(0,0,0,.12);
+    }
+    .pill b{color:var(--text)}
+    section{padding:28px 0}
+    .grid3{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px}
+    @media (max-width: 900px){ .grid3{grid-template-columns:1fr} }
+    .card{
+      background: rgba(17,26,51,.55);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .card h3{margin:0 0 8px; font-size:16px}
+    .card p{margin:0; color:var(--muted); font-size:14px}
+    .sectionTitle{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
+      margin:0 0 14px;
+    }
+    .sectionTitle h2{margin:0; font-size:20px}
+    .sectionTitle small{color:var(--muted)}
+    .split{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
+    @media (max-width: 900px){ .split{grid-template-columns:1fr} }
+    .teamList{display:grid; grid-template-columns: repeat(2, 1fr); gap:10px}
+    @media (max-width: 520px){ .teamList{grid-template-columns:1fr} }
+    .person{
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px;
+      background: rgba(0,0,0,.10);
+      display:flex; gap:12px; align-items:flex-start;
+    }
+    .avatar{
+      width:38px; height:38px; border-radius:14px;
+      background: rgba(255,255,255,.10);
+      border:1px solid var(--border);
+      flex: 0 0 auto;
+    }
+    .person b{display:block}
+    .person span{color:var(--muted); font-size:13px}
+    form{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;
+    }
+    input{
+      flex:1 1 240px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      outline:none;
+    }
+    input::placeholder{color:rgba(233,240,255,.55)}
+    .note{color:var(--muted); font-size:12px; margin-top:10px}
+    footer{
+      margin-top:40px;
+      padding-top:18px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:13px;
+      display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between;
+    }
+    .mono{font-family:var(--mono)}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="nav">
+    <a class="brand" href="#top">
+      <div class="logo" aria-hidden="true"></div>
+      <span>RovingReads</span>
+    </a>
+    <nav class="links">
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#team">Team</a>
+      <a href="#signup">Sign up</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top" class="wrap">
+  <section class="hero">
+    <div class="hcard">
+      <div class="kicker">Book clubs, made easier</div>
+      <h1>RovingReads helps your club pick books, stay on track, and talk about them.</h1>
+      <p class="sub">
+        A simple place for your reading group to discover titles, organize reads, and share ratings & reactions—
+        without the chaos of scattered texts and spreadsheets.
+      </p>
+
+      <div class="ctaRow">
+        <a class="btn primary" href="#signup">Join the early access list →</a>
+        <a class="btn" href="#features">See features</a>
+      </div>
+
+      <div class="meta">
+        <div class="pill"><span>Status</span><b>Building now</b></div>
+        <div class="pill"><span>Platforms</span><b>Mobile + Web</b></div>
+        <div class="pill"><span>Focus</span><b>Book clubs</b></div>
+        <div class="pill"><span>Contact</span><b class="mono">hello@rovingreads.app</b></div>
+      </div>
+    </div>
+
+    <div class="hcard">
+      <div class="kicker">What you’ll get</div>
+      <div style="margin-top:12px; display:grid; gap:10px;">
+        <div class="card">
+          <h3>Smarter picks</h3>
+          <p>Suggest books based on the club’s tastes and past ratings.</p>
+        </div>
+        <div class="card">
+          <h3>Less organizing</h3>
+          <p>Track schedules, pages, meetings, and discussion prompts in one place.</p>
+        </div>
+        <div class="card">
+          <h3>Better conversations</h3>
+          <p>Capture reactions, quotes, and takeaways as you read.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sectionTitle">
+      <h2>About RovingReads</h2>
+      <small>Built for real book clubs (not “one-off” groups)</small>
+    </div>
+    <div class="split">
+      <div class="card">
+        <h3>The problem</h3>
+        <p>
+          Book clubs usually live across group chats, notes apps, spreadsheets, and a dozen links. It’s hard to remember
+          what you read, what you rated, what’s next, and what everyone wants to read.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Our approach</h3>
+        <p>
+          RovingReads brings discovery, scheduling, and club ratings together. Keep it lightweight, fast, and friendly—
+          with just enough structure to keep the club moving.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="sectionTitle">
+      <h2>Features</h2>
+      <small>Simple now, extensible later</small>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <h3>Club bookshelf</h3>
+        <p>Shared shelf of “read / reading / next / someday” titles.</p>
+      </div>
+      <div class="card">
+        <h3>Ratings that matter</h3>
+        <p>See your rating, and a club average that reflects all members.</p>
+      </div>
+      <div class="card">
+        <h3>Reading plan</h3>
+        <p>Set a pace, meeting dates, and reminders without extra tools.</p>
+      </div>
+      <div class="card">
+        <h3>Discussion prompts</h3>
+        <p>Save questions, themes, and moments worth revisiting.</p>
+      </div>
+      <div class="card">
+        <h3>Member profiles</h3>
+        <p>Track preferences, favorite genres, and reading history.</p>
+      </div>
+      <div class="card">
+        <h3>Recommendations</h3>
+        <p>Suggestions powered by your club’s tastes (not generic lists).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="sectionTitle">
+      <h2>About the team</h2>
+      <small>Replace placeholders with real names + roles</small>
+    </div>
+
+    <div class="split">
+      <div class="card">
+        <h3>We’re building RovingReads</h3>
+        <p>
+          We’re a small team combining product design, engineering, and a love of reading groups.
+          Our goal: make book club logistics disappear so the reading (and talking) can shine.
+        </p>
+        <p style="margin-top:10px; color:var(--muted); font-size:14px;">
+          Want to collaborate, test features, or share feedback? Email us at
+          <span class="mono">hello@rovingreads.app</span>.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Team</h3>
+        <div class="teamList" style="margin-top:12px;">
+          <div class="person">
+            <div class="avatar" aria-hidden="true"></div>
+            <div>
+              <b>Your Name</b>
+              <span>Founder • Product & Engineering</span>
+            </div>
+          </div>
+          <div class="person">
+            <div class="avatar" aria-hidden="true"></div>
+            <div>
+              <b>Teammate Name</b>
+              <span>Design • Brand & UX</span>
+            </div>
+          </div>
+          <div class="person">
+            <div class="avatar" aria-hidden="true"></div>
+            <div>
+              <b>Teammate Name</b>
+              <span>Engineering • Mobile & Backend</span>
+            </div>
+          </div>
+          <div class="person">
+            <div class="avatar" aria-hidden="true"></div>
+            <div>
+              <b>Teammate Name</b>
+              <span>Community • Beta & Partnerships</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="signup">
+    <div class="sectionTitle">
+      <h2>Sign up</h2>
+      <small>Early access / beta list</small>
+    </div>
+
+    <div class="split">
+      <div class="card">
+        <h3>Join the list</h3>
+        <p>We’ll email you when beta spots open. No spam, ever.</p>
+
+        <!-- Replace action="" with your Formspree / ConvertKit / Mailchimp endpoint -->
+        <form action="" method="POST" onsubmit="return handleSignup(event)">
+          <input required type="email" name="email" placeholder="you@example.com" />
+          <button class="btn primary" type="submit">Request access</button>
+        </form>
+
+        <div id="signupMsg" class="note" role="status" aria-live="polite"></div>
+        <div class="note">
+          Tip: easiest is Formspree (email-to-form) or a Google Form. You can also just link to a signup page.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Other ways</h3>
+        <p style="margin-bottom:10px;">If you prefer links instead of email capture:</p>
+        <div class="ctaRow">
+          <a class="btn" href="#" aria-disabled="true">TestFlight (iOS) — coming soon</a>
+          <a class="btn" href="#" aria-disabled="true">Play Store beta — coming soon</a>
+          <a class="btn" href="#" aria-disabled="true">Web waitlist — coming soon</a>
+        </div>
+        <p class="note">
+          Replace those links when ready. If your app already has a login/signup URL, point “Web waitlist” to it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>© <span id="year"></span> RovingReads</div>
+    <div class="mono">Built with plain HTML • Deploy anywhere</div>
+  </footer>
+</main>
+
+<script>
+  // Tiny enhancements (no frameworks)
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  function handleSignup(e) {
+    // If you set a real form action endpoint, remove this function.
+    e.preventDefault();
+    const msg = document.getElementById("signupMsg");
+    msg.textContent = "Thanks! (Demo only) — connect a form endpoint to collect emails.";
+    return false;
+  }
+</script>
+</body>
+</html>
