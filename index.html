@@ -192,6 +192,8 @@ footer{
   .hero h1{font-size:38px}
 }
 </style>
+<script src="signup-config.js" defer></script>
+<script src="signup.js" defer></script>
 </head>
 
 <body>
@@ -206,6 +208,7 @@ footer{
       <a href="#about">About</a>
       <a href="#features">Features</a>
       <a href="#signup">Sign Up</a>
+      <a href="/feedback.html">Feedback</a>
     </div>
   </div>
 </header>
@@ -268,8 +271,14 @@ footer{
     <p style="color:var(--muted);margin-bottom:20px;">
       Be the first to try RovingReads when beta opens.
     </p>
-    <input type="email" placeholder="you@example.com" />
-    <a href="#" class="btn primary">Request Access</a>
+    <form id="beta-signup-form">
+      <label for="beta-email">Email</label>
+      <input id="beta-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" maxlength="254" aria-describedby="beta-notice" required />
+      <p id="beta-notice" style="color:var(--muted);font-size:14px;">By requesting access, you agree that we may email you about your beta invitation. Requests require manual approval. This does not subscribe you to marketing emails or create an account. We keep your email for up to 90 days.</p>
+      <button id="beta-submit" type="submit" class="btn primary" style="cursor:pointer;font-family:inherit;">Request Access</button>
+    </form>
+    <p id="beta-status" role="status" aria-live="polite"></p>
+    <noscript>Please enable JavaScript to request beta access.</noscript>
   </div>
 </section>
 
