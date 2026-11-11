@@ -1,296 +1,616 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="RovingReads — a modern book club experience." />
-<title>RovingReads</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="RovingReads — a modern book club experience." />
+  <title>RovingReads</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Literata:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  --bg:#07140f;
-  --paper:#fff7ea;
-  --text:#f4f7f5;
-  --muted:rgba(244,247,245,.75);
+  <style>
+    :root {
+      --bg: #07140f;
+      --paper: #fff7ea;
+      --text: #f4f7f5;
+      --muted: rgba(244,247,245,.75);
 
-  --hunter:#1e5b3f;
-  --hunter-dark:#164431;
-  --gold:#caa45a;
+      --hunter: #1e5b3f;
+      --hunter-dark: #164431;
+      --gold: #caa45a;
 
-  --border:rgba(255,247,234,.18);
-  --shadow:0 18px 40px rgba(0,0,0,.45);
+      --border: rgba(255,247,234,.18);
+      --shadow: 0 18px 40px rgba(0,0,0,.45);
 
-  --radius:20px;
-  --max:1050px;
+      --radius: 20px;
+      --max: 1050px;
 
-  --sans:"Inter", system-ui, sans-serif;
-  --serif:"Literata", Georgia, serif;
-}
+      --sans: "Inter", system-ui, sans-serif;
+      --serif: "Literata", Georgia, serif;
+    }
 
-/* Reset */
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:var(--sans);
-  background:
-    radial-gradient(900px 600px at 10% 0%, rgba(30,91,63,.4), transparent 60%),
-    radial-gradient(700px 500px at 90% 10%, rgba(202,164,90,.18), transparent 55%),
-    var(--bg);
-  color:var(--text);
-  line-height:1.6;
-}
+    /* Reset */
+    * {
+      box-sizing: border-box;
+    }
 
-/* Layout wrapper */
-.wrap{
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 20px;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* Header */
-header{
-  padding:20px 0;
-}
-.nav{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  font-weight:600;
-  text-decoration:none;
-  color:var(--text);
-}
-.logo{
-  width:36px;
-  height:36px;
-  border-radius:12px;
-  background:linear-gradient(135deg,var(--hunter),var(--gold));
-}
-.links{
-  display:flex;
-  gap:18px;
-}
-.links a{
-  text-decoration:none;
-  color:var(--muted);
-  font-size:14px;
-}
-.links a:hover{color:var(--text)}
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background:
+        radial-gradient(900px 600px at 10% 0%, rgba(30,91,63,.4), transparent 60%),
+        radial-gradient(700px 500px at 90% 10%, rgba(202,164,90,.18), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-/* Hero */
-.hero{
-  padding:80px 0 60px;
-  display:grid;
-  gap:40px;
-}
-.hero h1{
-  font-family:var(--serif);
-  font-size:48px;
-  line-height:1.15;
-  margin:0 0 20px;
-}
-.hero p{
-  max-width:600px;
-  color:var(--muted);
-  font-size:18px;
-}
+    /* Layout wrapper */
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-/* Buttons */
-.btn{
-  display:inline-block;
-  padding:14px 22px;
-  border-radius:14px;
-  font-weight:600;
-  text-decoration:none;
-  font-size:14px;
-  border:1px solid var(--border);
-  background:rgba(255,247,234,.08);
-  color:var(--text);
-}
-.btn.primary{
-  background:linear-gradient(135deg,var(--hunter),var(--hunter-dark));
-  border:none;
-}
-.btn.primary:hover{filter:brightness(1.05)}
-.btn:hover{transform:translateY(-1px)}
+    /* Header */
+    header {
+      padding: 20px 0;
+    }
 
-.cta{
-  margin-top:30px;
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
-}
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+    }
 
-/* Sections */
-section{
-  padding:80px 0;
-}
-.section-title{
-  font-family:var(--serif);
-  font-size:32px;
-  margin-bottom:40px;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
 
-/* Cards */
-.grid{
-  display:grid;
-  gap:24px;
-}
-.grid.three{
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-}
-.card{
-  padding:30px;
-  border-radius:var(--radius);
-  background:linear-gradient(180deg,rgba(255,247,234,.10),rgba(255,247,234,.05));
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-}
-.card h3{
-  font-family:var(--serif);
-  margin:0 0 12px;
-}
-.card p{
-  margin:0;
-  color:var(--muted);
-}
+    .logo {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      background: linear-gradient(
+        135deg,
+        var(--hunter),
+        var(--gold)
+      );
+    }
 
-/* Signup */
-.signup-box{
-  max-width:520px;
-}
-input{
-  width:100%;
-  padding:14px 16px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:rgba(255,247,234,.08);
-  color:var(--text);
-  margin-bottom:14px;
-}
-input::placeholder{color:rgba(244,247,245,.5)}
+    /* Desktop navigation */
+    .links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
 
-/* Footer */
-footer{
-  padding:40px 0;
-  border-top:1px solid var(--border);
-  text-align:center;
-  color:var(--muted);
-  font-size:14px;
-}
+    .links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
 
-/* Responsive */
-@media(max-width:768px){
-  .hero h1{font-size:38px}
-}
-</style>
-<script src="signup-config.js" defer></script>
-<script src="signup.js" defer></script>
+    .links a:hover {
+      color: var(--text);
+    }
+
+    /* Mobile menu button */
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255,247,234,.08);
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .menu-toggle:hover {
+      background: rgba(255,247,234,.12);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 60px;
+      display: grid;
+      gap: 40px;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: 48px;
+      line-height: 1.15;
+      margin: 0 0 20px;
+    }
+
+    .hero p {
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,247,234,.08);
+      color: var(--text);
+      transition: transform .2s, filter .2s;
+    }
+
+    .btn.primary {
+      background: linear-gradient(
+        135deg,
+        var(--hunter),
+        var(--hunter-dark)
+      );
+      border: none;
+    }
+
+    .btn.primary:hover {
+      filter: brightness(1.05);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .cta {
+      margin-top: 30px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Sections */
+    section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: 32px;
+      margin-bottom: 40px;
+    }
+
+    /* Cards */
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(250px, 100%), 1fr)
+      );
+    }
+
+    .card {
+      padding: 30px;
+      border-radius: var(--radius);
+      background: linear-gradient(
+        180deg,
+        rgba(255,247,234,.10),
+        rgba(255,247,234,.05)
+      );
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      font-family: var(--serif);
+      margin: 0 0 12px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    /* Signup */
+    .signup-box {
+      max-width: 520px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,247,234,.08);
+      color: var(--text);
+      margin-bottom: 14px;
+      font: inherit;
+    }
+
+    input::placeholder {
+      color: rgba(244,247,245,.5);
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Tablet and mobile */
+    @media (max-width: 768px) {
+      header {
+        padding: 16px 0;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .links {
+        display: none;
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        right: 0;
+        z-index: 100;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 10px;
+        background: #10291e;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+      }
+
+      .links.open {
+        display: flex;
+      }
+
+      .links a {
+        display: block;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 15px;
+      }
+
+      .links a:hover,
+      .links a:focus-visible {
+        background: rgba(255,247,234,.08);
+        color: var(--text);
+      }
+
+      /* Tighter mobile hero */
+      .hero {
+        padding: 45px 0 30px;
+        gap: 20px;
+      }
+
+      .hero h1 {
+        font-size: clamp(32px, 8vw, 42px);
+        line-height: 1.2;
+      }
+
+      .hero p {
+        font-size: 16px;
+        line-height: 1.7;
+      }
+
+      /* Reduce whitespace between sections */
+      section {
+        padding: 48px 0;
+      }
+
+      .section-title {
+        font-size: 28px;
+        margin-bottom: 24px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+
+      .cta {
+        margin-top: 24px;
+        gap: 12px;
+      }
+    }
+
+    /* Small phones */
+    @media (max-width: 480px) {
+      .cta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .cta .btn {
+        text-align: center;
+      }
+
+      .brand {
+        gap: 10px;
+      }
+
+      .logo {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .btn {
+        transition: none;
+      }
+    }
+  </style>
+
+  <!-- Existing beta signup scripts -->
+  <script src="signup-config.js" defer></script>
+  <script src="signup.js" defer></script>
 </head>
 
 <body>
 
-<header class="wrap">
-  <div class="nav">
-    <a href="#" class="brand">
-      <div class="logo"></div>
-      RovingReads
-    </a>
-    <div class="links">
-      <a href="#about">About</a>
-      <a href="#features">Features</a>
-      <a href="#signup">Sign Up</a>
-      <a href="/feedback.html">Feedback</a>
-    </div>
-  </div>
-</header>
+  <!-- Header -->
+  <header class="wrap">
+    <div class="nav">
+      <a href="#" class="brand">
+        <div class="logo"></div>
+        RovingReads
+      </a>
 
-<main class="wrap">
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+        aria-controls="site-links"
+      >
+        ☰
+      </button>
 
-<section class="hero">
-  <div>
-    <h1>A better way to run your book club.</h1>
-    <p>
-      RovingReads helps your club discover books, track progress, share ratings,
-      and have richer discussions — all in one calm, bookish space.
-    </p>
-    <div class="cta">
-      <a href="#signup" class="btn primary">Join Early Access</a>
-      <a href="#features" class="btn">See Features</a>
+      <nav class="links" id="site-links" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#signup">Sign Up</a>
+        <a href="/feedback.html">Feedback</a>
+      </nav>
     </div>
-  </div>
-</section>
+  </header>
 
-<section id="about">
-  <div class="section-title">About RovingReads</div>
-  <div class="grid three">
-    <div class="card">
-      <h3>The Problem</h3>
-      <p>Book clubs live across texts, spreadsheets, and scattered notes. It’s hard to stay organized.</p>
-    </div>
-    <div class="card">
-      <h3>Our Approach</h3>
-      <p>We combine discovery, scheduling, and shared ratings into one clean experience.</p>
-    </div>
-    <div class="card">
-      <h3>The Goal</h3>
-      <p>Make logistics disappear so reading — and conversation — takes center stage.</p>
-    </div>
-  </div>
-</section>
+  <main class="wrap">
 
-<section id="features">
-  <div class="section-title">Features</div>
-  <div class="grid three">
-    <div class="card">
-      <h3>Club Bookshelf</h3>
-      <p>Track what you've read, are reading, and want to read next.</p>
-    </div>
-    <div class="card">
-      <h3>Shared Ratings</h3>
-      <p>See club averages and individual member ratings.</p>
-    </div>
-    <div class="card">
-      <h3>Reading Plans</h3>
-      <p>Set pacing, meeting dates, and discussion prompts.</p>
-    </div>
-  </div>
-</section>
+    <!-- Hero -->
+    <section class="hero">
+      <div>
+        <h1>A better way to run your book club.</h1>
+        <p>
+          RovingReads helps your club discover books, track progress,
+          share ratings, and have richer discussions — all in one
+          calm, bookish space.
+        </p>
 
-<section id="signup">
-  <div class="section-title">Join Early Access</div>
-  <div class="signup-box">
-    <p style="color:var(--muted);margin-bottom:20px;">
-      Be the first to try RovingReads when beta opens.
-    </p>
-    <form id="beta-signup-form">
-      <label for="beta-email">Email</label>
-      <input id="beta-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" maxlength="254" aria-describedby="beta-notice" required />
-      <p id="beta-notice" style="color:var(--muted);font-size:14px;">By requesting access, you agree that we may email you about your beta invitation. Requests require manual approval. This does not subscribe you to marketing emails or create an account. We keep your email for up to 90 days.</p>
-      <button id="beta-submit" type="submit" class="btn primary" style="cursor:pointer;font-family:inherit;">Request Access</button>
-    </form>
-    <p id="beta-status" role="status" aria-live="polite"></p>
-    <noscript>Please enable JavaScript to request beta access.</noscript>
-  </div>
-</section>
+        <div class="cta">
+          <a href="#signup" class="btn primary">
+            Join Early Access
+          </a>
+          <a href="#features" class="btn">
+            See Features
+          </a>
+        </div>
+      </div>
+    </section>
 
-</main>
+    <!-- About -->
+    <section id="about">
+      <h2 class="section-title">About RovingReads</h2>
 
-<footer>
-  © <span id="year"></span> RovingReads
-</footer>
+      <div class="grid three">
+        <div class="card">
+          <h3>The Problem</h3>
+          <p>
+            Book clubs live across texts, spreadsheets,
+            and scattered notes. It’s hard to stay organized.
+          </p>
+        </div>
 
-<script>
-document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+        <div class="card">
+          <h3>Our Approach</h3>
+          <p>
+            We combine discovery, scheduling, and shared ratings
+            into one clean experience.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>The Goal</h3>
+          <p>
+            Make logistics disappear so reading — and
+            conversation — takes center stage.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+      <h2 class="section-title">Features</h2>
+
+      <div class="grid three">
+        <div class="card">
+          <h3>Club Bookshelf</h3>
+          <p>
+            Track what you've read, are reading,
+            and want to read next.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Shared Ratings</h3>
+          <p>
+            See club averages and individual member ratings.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Reading Plans</h3>
+          <p>
+            Set pacing, meeting dates, and discussion prompts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Early access signup -->
+    <section id="signup">
+      <h2 class="section-title">Join Early Access</h2>
+
+      <div class="signup-box">
+        <p style="color:var(--muted);margin-bottom:20px;">
+          Be the first to try RovingReads when beta opens.
+        </p>
+
+        <form id="beta-signup-form">
+          <label for="beta-email">Email</label>
+
+          <input
+            id="beta-email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            maxlength="254"
+            aria-describedby="beta-notice"
+            required
+          />
+
+          <p
+            id="beta-notice"
+            style="color:var(--muted);font-size:14px;"
+          >
+            By requesting access, you agree that we may email you
+            about your beta invitation. Requests require manual
+            approval. This does not subscribe you to marketing
+            emails or create an account. We keep your email
+            for up to 90 days.
+          </p>
+
+          <button
+            id="beta-submit"
+            type="submit"
+            class="btn primary"
+            style="cursor:pointer;font-family:inherit;"
+          >
+            Request Access
+          </button>
+        </form>
+
+        <p
+          id="beta-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <noscript>
+          Please enable JavaScript to request beta access.
+        </noscript>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    © <span id="year"></span> RovingReads
+  </footer>
+
+  <script>
+    // Copyright year
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    // Mobile navigation
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".links");
+
+    function closeMenu() {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.textContent = "☰";
+    }
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+
+      menuToggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+      );
+
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+
+    // Close menu when a navigation link is selected
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    // Close menu when clicking outside navigation
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".nav")) {
+        closeMenu();
+      }
+    });
+
+    // Close menu with Escape key
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    });
+
+    // Reset navigation when resizing to desktop
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        closeMenu();
+      }
+    });
+  </script>
 
 </body>
 </html>
