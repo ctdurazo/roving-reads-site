@@ -14,4 +14,4 @@ Beta features may change as clubs try them. Keep using your usual tools for annu
 
 ## Questions and feedback
 
-Reply to your beta invitation with bugs, ideas, questions, or privacy concerns. For a bug, include your device platform, app version if available, what you were trying to do, and what happened. If you or a member cannot join or use the club, mention that in your message so the beta team can prioritize it. Keep passwords, invitation links, and other members' information out of feedback.
+For bugs, ideas, or questions, open **Settings → Beta feedback** and choose a category. If you cannot open the app or send the draft, use the support address in your beta invitation. Use that address for privacy concerns. For a bug, include your device platform, app version if available, what you were trying to do, and what happened. If you or a member cannot join or use the club, mention that in your message so the beta team can prioritize it. Keep passwords, invitation links, and other members' information out of feedback.
